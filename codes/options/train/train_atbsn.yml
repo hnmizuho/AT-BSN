@@ -1,0 +1,73 @@
+#### general settings
+name: atbsn # experiment params. support debug.
+use_tb_logger: true
+model: ATBSN
+gpu_ids: [2]
+
+#### description
+description: "atbsn training"
+
+#### datasets
+datasets:
+  train:
+    d_name: SIDD
+    dataset_root: '/home/csy/2728/home/csy/2728/SIDD_Srgb_Patches'
+    reduce_scale: 1
+
+    n_workers: 8   # actual n_workers
+    batch_size: 8  # actual bt for both single and multi GPUs
+    crop_size: 256
+
+  val:
+    d_name: SIDD
+    dataset_root: '/home/csy/2728/home/csy/2728/SIDD_Srgb_Patches'
+    reduce_scale: 1
+
+    n_workers: 8
+    batch_size: 8
+    crop_size: 0
+
+#### path
+# when set resume_state, please set pretrain_model, too
+path:
+  pretrain_model:
+  strict_load: true
+  # resume_state:
+  resume_state:
+
+#### training settings
+train:
+  lr: !!float 3e-4
+  weight_decay: !!float 0
+  # epsilon: !!float 1e-8
+  beta1: 0.9
+  beta2: 0.999
+  # beta2: 0.9
+
+  niter: 400000
+  warmup_iter: -1
+  
+  # lr_scheme: MultiStepLR
+  # lr_milestones: [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000]
+  # # lr_milestones: [40000, 80000]
+  # # lr_milestones: [9999999]
+  # # lr_milestones: [10005, 20005, 30005, 40005, 50005, 60005, 70005, 80005, 90005]
+  # lr_gamma: 0.5
+
+  lr_scheme: CosineAnnealingLR
+  T_max: 400000
+  eta_min: !!float 0
+
+  gradient_clipping:
+
+  manual_seed:
+  val_freq: !!float 2000 #iter
+
+  train_hole_size: 9
+  valid_hole_size: 3
+
+
+#### logger
+logger:
+  print_freq: 100 #iter
+  save_checkpoint_freq: !!float 2000 #iter

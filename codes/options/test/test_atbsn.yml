@@ -1,0 +1,43 @@
+#### general settings
+name: atbsn_distill # experiment params. support debug.
+# model: ATBSN
+model: ATBSN_D
+gpu_ids: [0]
+
+#### description
+description: "valid or test"
+
+#### datasets
+datasets:
+  train:
+
+  val:
+    d_name: SIDD
+    dataset_root: 'D:/SIDD_Srgb_Patches'
+    reduce_scale: 1
+
+    n_workers: 8
+    batch_size: 8
+    crop_size: 0
+
+  test:
+    d_name: SIDD
+    dataset_root: '/path/to/your_test_file'
+    reduce_scale: 1
+
+    n_workers: 1
+    batch_size: 1
+    crop_size: 0
+
+#### path
+path:
+  # pretrain_model: "../pretrained/atbsn_best_siddmedium_36p8_40w.pth"
+  pretrain_model: "../pretrained/atbsn-d_best_siddmedium_37p91_6w2.pth"
+  strict_load: true
+
+#### training settings
+train:
+  manual_seed: 1314
+
+  train_hole_size: 9
+  valid_hole_size: 3
